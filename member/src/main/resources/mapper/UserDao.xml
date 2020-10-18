@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.member.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="head_img" jdbcType="VARCHAR" property="headImg"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="user_status" property="userStatus" jdbcType="INTEGER"/>
+        <result column="register_source" property="registerSource" jdbcType="INTEGER"/>
+        <result column="register_ip" property="registerIp" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BASE_SQL">
+        id, user_id, head_img, user_name, phone, `password`, user_status, email, register_ip,
+    register_source, create_time, update_time
+    </sql>
+    <select id="findByPhone" resultMap="BaseResultMap">
+        select
+        <include refid="BASE_SQL"/>
+        from `user`
+        <where>
+            <if test="phone!=null and phone!=''">
+                phone=#{phone}
+            </if>
+            <if test="email!=null and email!=''">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+
+    <insert id="userRegister" parameterType="com.robot.api.pojo.User" useGeneratedKeys="true">
+        insert into `user`(phone,user_id,user_name,head_img,password,email,register_source,user_status,create_time,update_time,register_ip)
+        values(#{phone},#{userId},#{userName},#{headImg},#{password},#{email},#{registerSource},#{userStatus},#{createTime},#{updateTime},#{registerIp})
+    </insert>
+    <update id="updateUserLogin" parameterType="com.robot.api.pojo.User">
+        update `user`
+        <set>
+            <if test="userName !=null and userName!='' ">
+                user_name=#{userName},
+            </if>
+            <if test="password !=null and password!='' ">
+                password=#{password},
+            </if>
+            <if test="userStatus !=null">
+                user_status=#{userStatus},
+            </if>
+        </set>
+        where user_id=#{userId}
+    </update>
+
+    <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+            id, user_id, head_img, user_name, phone,  user_status, email, register_ip,
+    register_source, create_time, update_time,`password`
+        from `user`
+        where user_id = #{uid,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="BASE_SQL"/>
+        from `user`
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `user`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.robot.api.pojo.User" useGeneratedKeys="true">
+    insert into user (user_id, head_img, user_name,
+      phone, `password`, user_status,
+      email, register_ip, register_source,
+      create_time, update_time)
+    values (#{userId,jdbcType=INTEGER}, #{headImg,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userStatus,jdbcType=TINYINT},
+      #{email,jdbcType=VARCHAR}, #{registerIp,jdbcType=VARCHAR}, #{registerSource,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.robot.api.pojo.User"
+            useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="headImg != null">
+                head_img,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="userStatus != null">
+                user_status,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="registerIp != null">
+                register_ip,
+            </if>
+            <if test="registerSource != null">
+                register_source,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="headImg != null">
+                #{headImg,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userStatus != null">
+                #{userStatus,jdbcType=TINYINT},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="registerIp != null">
+                #{registerIp,jdbcType=VARCHAR},
+            </if>
+            <if test="registerSource != null">
+                #{registerSource,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.robot.api.pojo.User">
+        update user
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="headImg != null">
+                head_img = #{headImg,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userStatus != null">
+                user_status = #{userStatus,jdbcType=TINYINT},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="registerIp != null">
+                register_ip = #{registerIp,jdbcType=VARCHAR},
+            </if>
+            <if test="registerSource != null">
+                register_source = #{registerSource,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.robot.api.pojo.User">
+    update user
+    set user_id = #{userId,jdbcType=INTEGER},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=TINYINT},
+      email = #{email,jdbcType=VARCHAR},
+      register_ip = #{registerIp,jdbcType=VARCHAR},
+      register_source = #{registerSource,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.product.dao.ProductAttributeDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.ProductAttribute">
+        <id column="id" property="s1" jdbcType="INTEGER"/>
+        <result column="name" property="attrName" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="is_multiple" property="multiple" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <collection property="options" ofType="com.robot.api.pojo.ProductAttributeOption">
+            <id column="opId" property="id" jdbcType="INTEGER"/>
+            <result column="attr_id" property="attrId" jdbcType="INTEGER"/>
+            <result column="opName" property="name" jdbcType="VARCHAR"/>
+            <result column="picture_url" property="imgUrl" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <sql id="BASE_SQL">
+       id,`name`,`type`,is_multiple,sort,create_time,update_time
+    </sql>
+    <select id="findAttributeList" resultMap="BaseResultMap">
+        SELECT
+        a.id,
+        a.`name`,
+        a.`type`,
+        a.is_multiple,
+        o.`name` opName,
+        o.id opId,
+        o.attr_id,
+        o.sort
+        FROM
+        product_attribute a,
+        product_attribute_option o
+        WHERE
+        o.id IN ( <foreach collection="skus" item="sku" index="index" separator=",">
+        #{sku.attrOne},#{sku.attrTwo}</foreach> )
+        AND o.attr_id = a.id
+
+
+    </select>
+
+</mapper>

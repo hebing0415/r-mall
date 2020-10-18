@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.product.dao.ProductCategoryDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.ProductCategory">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="cateName" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <collection property="attributes"  column="{cateId=id}" select="com.robot.product.dao.ProductAttributeDao.findAttributeList"/>
+    </resultMap>
+
+    <sql id="BASE_SQL">
+        id,`name`,sort,create_time,update_time,product_id
+
+    </sql>
+    <select id="findProductCategory" resultMap="BaseResultMap" parameterType="map">
+        select
+       id,`name`,sort,product_id
+        from product_category
+        where product_id=#{productId}
+    </select>
+
+</mapper>

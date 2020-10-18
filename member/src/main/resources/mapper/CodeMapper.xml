@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.member.dao.CodeDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.Code">
+        <result column="number" property="number" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+
+    </resultMap>
+
+    <insert id="insertCode" parameterType="com.robot.api.pojo.Code">
+        insert into code(number,code,create_time,update_time)
+        values(#{number},#{code},#{createTime},#{updateTime})
+    </insert>
+</mapper>

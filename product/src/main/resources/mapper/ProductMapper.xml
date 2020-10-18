@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.product.dao.ProductDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.Product">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"/>
+        <result column="species_option_id" property="speciesOptionId" jdbcType="INTEGER"/>
+        <result column="rights" property="rights" jdbcType="VARCHAR"/>
+        <result column="recommend" property="recommend" jdbcType="INTEGER"/>
+        <result column="virtual_num" property="virtualNum" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="enable" property="enable" jdbcType="INTEGER"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="price" property="price" javaType="DECIMAL"/>
+        <result column="species_option_id" property="speciesOptionId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="brand" property="brand" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="BaseSql">
+        id,`name`,product_id,img,price,create_time,update_time,title,species_option_id,rights,recommend,virtual_num,sort,enable
+    </sql>
+
+    <select id="findProductList" resultMap="BaseResultMap">
+        select
+        <include refid="BaseSql"/>
+        from product
+        <where>
+            <if test="speciesOptionId!=null">
+                species_option_id = #{speciesOptionId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findProductOne" resultMap="BaseResultMap">
+     SELECT
+	p.id,
+	p.`name`,
+	p.product_id,
+	p.img,
+	p.price,
+	p.create_time,
+	p.update_time,
+	p.title,
+	p.species_option_id,
+	p.rights,
+	p.recommend,
+	p.virtual_num,
+	p.sort,
+	s.name brand
+FROM
+	product p
+	LEFT JOIN species_option s on p.species_option_id = s.id
+WHERE
+	p.product_id = #{productId}  limit 1
+    </select>
+</mapper>

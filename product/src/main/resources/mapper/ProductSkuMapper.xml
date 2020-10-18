@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.product.dao.ProductSkuDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.ProductSku">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="sku" property="sku" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="attr_one" property="attrOne" jdbcType="INTEGER"/>
+        <result column="attr_two" property="attrTwo" jdbcType="INTEGER"/>
+        <result column="sku" property="sku" jdbcType="VARCHAR"/>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="attrOneName" property="attrOneName" jdbcType="VARCHAR"/>
+        <result column="attrTwoName" property="attrTwoName" jdbcType="VARCHAR"/>
+        <result column="keywords" property="keywords" jdbcType="VARCHAR"/>
+        <result column="tags" property="tags" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="market_price" property="marketPrice" jdbcType="DECIMAL"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="warning_stock" property="warnStock" jdbcType="INTEGER"/>
+        <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BASE_SQL">
+        id,sku,`name`,attr_one,attr_two,product_id,title,keywords,tags,price,
+        market_price,stock,warning_stock,picture_url,create_time,update_time,
+    </sql>
+    <select id="findProductSkuList" resultMap="BaseResultMap">
+        select
+        <include refid="BASE_SQL"/>
+        from product_sku
+    </select>
+
+    <select id="findProductByProductId" resultMap="BaseResultMap">
+        select
+        <include refid="BASE_SQL"/>
+        from product_sku where product_id= #{productId}
+    </select>
+
+    <select id="findProductByProductIdSimple" resultMap="BaseResultMap">
+        select
+        sku,attr_one,attr_two,stock,price,picture_url
+        from product_sku where product_id= #{productId}
+    </select>
+
+    <select id="findProductSkuDetail" resultMap="BaseResultMap">
+   SELECT
+	s.sku,
+	s.`name`,
+	s.attr_one,
+	s.attr_two,
+	s.product_id,
+	s.title,
+	s.keywords,
+	s.tags,
+	s.price,
+	s.market_price,
+	s.stock,
+	s.warning_stock,
+	s.picture_url,
+	p.`name` attrOneName,
+	p2.`name` attrTwoName
+FROM
+	product_sku s
+	LEFT JOIN product_attribute_option p ON s.attr_one = p.id
+	LEFT JOIN product_attribute_option p2 ON s.attr_two = p2.id
+WHERE
+	sku = #{sku}
+
+	LIMIT 1
+    </select>
+</mapper>

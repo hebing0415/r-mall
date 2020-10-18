@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.product.dao.ProductImgDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.ProductImg">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"/>
+        <result column="roll_img" property="rollImg" jdbcType="VARCHAR"/>
+        <result column="detail_img" property="detailImg" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BASE_SQL">
+       id,product_id,roll_img,detail_img
+    </sql>
+
+    <select id="findProductImg" resultMap="BaseResultMap">
+        select
+        <include refid="BASE_SQL"/>
+        from product_img where product_id=#{productId}
+        limit 1
+    </select>
+</mapper>

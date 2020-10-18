@@ -1,0 +1,6 @@
+# Project exclude paths
+/api/target/
+/product/target/
+
+# Editor-based HTTP Client requests
+rest-client.private.env.json

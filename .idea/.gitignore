@@ -1,0 +1,9 @@
+# Default ignored files
+/workspace.xml
+
+# Editor-based HTTP Client requests
+/httpRequests/
+rest-client.private.env.json
+# Datasource local storage ignored files
+/dataSources.local.xml
+/dataSources/

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robot.product.dao.ProductAttributeOptionDao">
+    <resultMap id="BaseResultMap" type="com.robot.api.pojo.ProductAttributeOption">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="attr_id" property="attrId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="picture_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BASE_SQL">
+       id,`name`,attr_id,sort,create_time,update_time,
+    </sql>
+
+    <select id="findOptionList" resultMap="BaseResultMap">
+        select
+        p.id,p.`name`,p.attr_id,p.sort, a.picture_url
+        from product_attribute_option p LEFT JOIN product_sku a on p.id = a.attr_one
+        where attr_id
+        in
+        <foreach collection="productAttributes"  item="item" index="key" open="(" separator="," close=")">
+            #{item.s1}
+        </foreach>
+        and product_id=#{productId}
+    </select>
+
+    <select id="findOptionByList" resultMap="BaseResultMap">
+        select
+        id,`name`,attr_id
+        from product_attribute_option
+        where attr_id
+        in
+        <foreach collection="productAttributes"  item="item" index="key" open="(" separator="," close=")">
+            #{item.s1}
+        </foreach>
+    </select>
+
+    <select id="findByAttrId" resultMap="BaseResultMap">
+        select <include refid="BASE_SQL"></include>
+        from product_attribute_option
+        where attr_id = #{attrId}
+    </select>
+
+</mapper>

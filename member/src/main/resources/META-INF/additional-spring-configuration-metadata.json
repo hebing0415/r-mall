@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "dubbo.scan",
+      "type": "java.lang.String",
+      "description": "Description for dubbo.scan."
+  }
+] }

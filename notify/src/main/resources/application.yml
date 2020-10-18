@@ -1,0 +1,49 @@
+server:
+  port: 8068
+
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://数据库地址:3306/r_mall?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  redis:
+    host: 47.102.137.205
+    port: 6379
+    password: robot_sh_redis
+    database: 0
+    timeout: 5000
+    jedis:
+      pool:
+        max-idle: 6
+        max-active: 32
+        max-wait: 10000
+        min-idle: 500
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+dubbo:
+  application:
+    name: r-mall
+  registry:
+    address: nacos://47.102.137.205
+    port: 8848
+  protocol:
+    serialization: kryo
+nacos:
+  config:
+    server-addr: 47.102.137.205:8848
+
+
+logging:
+  config: classpath:logging.xml
+
+

@@ -1,0 +1,66 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:mysql://数据库地址:3306/r_mall?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    username: root
+    password: 123456
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      maximum-pool-size: 15
+      minimum-idle: 5
+      pool-name: HikariCP
+  redis:
+    host: redis 地址
+    port: 6379
+    password: redis密码
+    database: 0
+    timeout: 5000
+    jedis:
+      pool:
+        max-idle: 6
+        max-active: 32
+        max-wait: 10000
+        min-idle: 500
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: mongodb地址
+      password: mongodb密码
+      database: r-mall
+      username: mongodb用户名
+dubbo:
+  application:
+    name: order-provider
+  registry:
+    address: nacos地址
+    port: 8848
+  protocol:
+    serialization: kryo
+    port: 20883
+
+logging:
+  config: classpath:logging.xml
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+##有需要自行开启
+#rocketmq:
+#  name-server: 
+#  producer:
+#    group: producerGroup
+
+## 配置中心获取配置
+#nacos:
+#  config:
+#    server-addr: 
+#    namespace: order-config
