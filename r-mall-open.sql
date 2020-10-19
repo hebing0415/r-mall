@@ -4,7 +4,6 @@
  Source Server         : 阿里云
  Source Server Type    : MySQL
  Source Server Version : 80019
- Source Host           : 47.102.137.205:3306
  Source Schema         : r-mall-open
 
  Target Server Type    : MySQL
