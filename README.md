@@ -23,14 +23,16 @@
  
  (3) 后端代码地址：https://github.com/52JDK/mall-admin
 
-### 项目整体架构
+### 项目整体架构 [图片不能显示点这里](http://ftp.52jdk.com/springcloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg)
 
 <img src="http://ftp.52jdk.com/springcloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg" alt=""/>
+
+
 
 ### 项目文档整理中... 欢迎持续关注
 
 
-### 项目截图
+### 项目截图 [图片不能显示点这里](http://ftp.52jdk.com/shop.jpg)
 
 <img src="http://ftp.52jdk.com/shop.jpg" alt=""/>
 
