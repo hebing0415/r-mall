@@ -24,20 +24,20 @@ class NotifyApplicationTests {
     @Test
     void contextLoads() {
         AliYunEmail aliYunEmail = new AliYunEmail();
-        aliYunEmail.setAccountName("robot@www.rmall96.online");
+        aliYunEmail.setAccountName("");
         aliYunEmail.setFromAlias("程序员小R");
         aliYunEmail.setAddressType(1);
-        aliYunEmail.setTagName("robot96");
+        aliYunEmail.setTagName("");
         aliYunEmail.setReplyToAddress(true);
         List<String> list = new ArrayList<>();
-        list.add("tianhaowei@lppz.com");
+        list.add("");
         aliYunEmail.setToAddress(list);
         //可以给多个收件人发送邮件，收件人之间用逗号分开，批量发信建议使用BatchSendMailRequest方式
         //request.setToAddress(“邮箱1,邮箱2”);
         aliYunEmail.setSubject("验证码");
-        String aliyunAccessKeyId = "LTAI4FoQ88NpNqCR7bNYy4dC";
+        String aliyunAccessKeyId = "";
         //阿里云accessKeySecret
-        String aliyunAccessKeySecret = "KmkwlDrPBC68bgvZiNtrjonKIYmVT8";
+        String aliyunAccessKeySecret = "";
         Map<String, Object> valueMap = new HashMap<>();
         valueMap.put("code", RandomCodeUtil.createCode());
         aliYunEmail.setValueMap(valueMap);
